@@ -43,6 +43,18 @@
     <Reference Include="ClientNetworkTransform">
       <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\ClientNetworkTransform.dll</HintPath>
     </Reference>
+    <Reference Include="CustomSounds">
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\CustomSounds.dll</HintPath>
+    </Reference>
+    <Reference Include="LC_SoundTool">
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\LC_SoundTool.dll</HintPath>
+    </Reference>
+    <Reference Include="LethalLib">
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\Evaisa-LethalLib\LethalLib\LethalLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MMHOOK_Assembly-CSharp">
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\MMHOOK_Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,15 +69,28 @@
     <Reference Include="UnityEngine">
       <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Armor.cs" />
-    <Compile Include="Patches\PlayerControllerBPatch.cs" />
+    <Compile Include="Patches\ArmorPatch.cs" />
+    <Compile Include="Patches\OnSpawn.cs" />
+    <Compile Include="Patches\VestBehavior.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SFX\PlaySFX.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SFX\tankHit1.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

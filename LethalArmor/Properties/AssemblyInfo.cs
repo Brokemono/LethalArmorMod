@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LethalArmor")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Makes it so the player can tank certain hits before taking real damage.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LethalArmor")]

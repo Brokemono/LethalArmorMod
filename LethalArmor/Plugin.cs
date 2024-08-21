@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using LethalArmor.PlayerControllerBPatch;
+using LethalArmor.Patches;
+using LethalLib.Modules;
+using System.IO;
+using System.Reflection;
+using UnityEngine;
 
 namespace LethalArmor
 {
@@ -15,7 +13,10 @@ namespace LethalArmor
     public class ArmorBase : BaseUnityPlugin
     {
         private static ArmorBase Instance;
-        internal ManualLogSource mLs;
+        public static ManualLogSource mls;
+
+        public static int hits = 0;
+        public static bool hasVest = false;
 
         void Awake()
         {
@@ -24,12 +25,35 @@ namespace LethalArmor
                 Instance = this;
             }
 
-            mLs = BepInEx.Logging.Logger.CreateLogSource("LethalArmor");
-
-            mLs.LogInfo("Armor is born!");
+            mls = BepInEx.Logging.Logger.CreateLogSource("LethalArmor");
 
             var harmony = new Harmony("Brokemono.LethalArmor");
-            harmony.PatchAll(typeof(PlayerControllerBPatch.DamagePlayer_Patch));
+            Harmony.CreateAndPatchAll(typeof(Protect));
+            Harmony.CreateAndPatchAll(typeof(Prevent));
+            Harmony.CreateAndPatchAll(typeof(OnSpawn));
+            Harmony.CreateAndPatchAll(typeof(VestBehavior));
+
+            string assetDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "itemmod");
+            AssetBundle bundle = AssetBundle.LoadFromFile(assetDir);
+
+            Item ArmorVestItem = bundle.LoadAsset<Item>("Assets/Items/ArmorVestItem.asset");
+
+            VestBehavior script = ArmorVestItem.spawnPrefab.AddComponent<VestBehavior>();
+            script.grabbable = true;
+            script.grabbableToEnemies = true;
+            script.itemProperties = ArmorVestItem;
+
+            NetworkPrefabs.RegisterNetworkPrefab(ArmorVestItem.spawnPrefab);
+            Utilities.FixMixerGroups(ArmorVestItem.spawnPrefab);
+            Items.RegisterScrap(ArmorVestItem, 5, Levels.LevelTypes.All);
+            TerminalNode node = ScriptableObject.CreateInstance<TerminalNode>();
+            node.clearPreviousText = true;
+            node.displayText = "You can tank some hits with this armor...\n\n";
+            Items.RegisterShopItem(ArmorVestItem, null, null, node, 0);
+
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), "Brokemono.LethalArmor");
+
+            mls.LogInfo("Loaded LethalArmor");
         }
     }
 }
