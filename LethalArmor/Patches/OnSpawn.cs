@@ -6,7 +6,7 @@ namespace LethalArmor.Patches
     internal class OnSpawn
     {
         [HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.DamagePlayer))]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
 
         private static void PlayerControllerB_Reset(PlayerControllerB __instance)
         {
@@ -17,3 +17,27 @@ namespace LethalArmor.Patches
         }
     }
 }
+
+/*
+public enum CauseOfDeath
+{
+	Unknown,
+	Bludgeoning,
+	Gravity,
+	Blast,
+	Strangulation,
+	Suffocation,
+	Mauling,
+	Gunshots,
+	Crushing,
+	Drowning,
+	Abandoned,
+	Electrocution,
+	Kicking,
+	Burning,
+	Stabbing,
+	Fan,
+	Inertia,
+	Snipped
+}
+*/

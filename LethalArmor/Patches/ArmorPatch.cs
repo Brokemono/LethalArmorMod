@@ -1,6 +1,22 @@
 ﻿using HarmonyLib;
 using GameNetcodeStuff;
 using BepInEx.Logging;
+using System.Linq;
+
+public enum Preventative
+{
+    Bludgeoning,
+    Blast,
+    Mauling,
+    Gunshots,
+    Crushing,
+    Electrocution,
+    Kicking,
+    Burning,
+    Stabbing,
+    Fan,
+    Snipped
+}
 
 namespace LethalArmor.Patches
 {
@@ -31,16 +47,32 @@ namespace LethalArmor.Patches
             ArmorBase.hasVest = false;
             return true;
         }
-    }
+    };
 
     internal class Prevent
     {
+
+        private static readonly CauseOfDeath[] Preventative =
+        {
+            CauseOfDeath.Bludgeoning,
+            CauseOfDeath.Blast,
+            CauseOfDeath.Mauling,
+            CauseOfDeath.Gunshots,
+            CauseOfDeath.Crushing,
+            CauseOfDeath.Electrocution,
+            CauseOfDeath.Kicking,
+            CauseOfDeath.Burning,
+            CauseOfDeath.Stabbing,
+            CauseOfDeath.Fan,
+            CauseOfDeath.Snipped
+        };
+
         [HarmonyPatch(typeof(PlayerControllerB), nameof(PlayerControllerB.KillPlayer))]
         [HarmonyPrefix]
 
         private static bool PlayerControllerB_KillPlayer(PlayerControllerB __instance)
         {
-            if (ArmorBase.hits > 0 && !__instance.takingFallDamage && ArmorBase.hasVest)
+            if (ArmorBase.hits > 0 && !__instance.takingFallDamage && ArmorBase.hasVest && Preventative.Contains(__instance.causeOfDeath))
             {
                 ArmorBase.mls.LogInfo("Hit armor! - Prevented Death!!!");
                 ArmorBase.hits -= 1;
@@ -64,3 +96,27 @@ namespace LethalArmor.Patches
         }
     }
 }
+
+/*
+public enum CauseOfDeath
+{
+	Unknown,
+	Bludgeoning,
+	Gravity,
+	Blast,
+	Strangulation,
+	Suffocation,
+	Mauling,
+	Gunshots,
+	Crushing,
+	Drowning,
+	Abandoned,
+	Electrocution,
+	Kicking,
+	Burning,
+	Stabbing,
+	Fan,
+	Inertia,
+	Snipped
+}
+*/

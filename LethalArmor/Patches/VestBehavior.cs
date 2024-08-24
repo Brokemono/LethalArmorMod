@@ -13,6 +13,7 @@ namespace LethalArmor.Patches
             if (buttonDown && !ArmorBase.hasVest)
             {
                 base.DestroyObjectInHand(playerHeldBy);
+                base.DiscardItem();
                 ArmorBase.hasVest = true;
                 ArmorBase.hits = 6;
                 ArmorBase.mls.LogInfo("Equipped Armor");

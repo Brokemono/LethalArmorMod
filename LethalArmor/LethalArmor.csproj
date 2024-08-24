@@ -53,7 +53,7 @@
       <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\Evaisa-LethalLib\LethalLib\LethalLib.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
-      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\MMHOOK_Assembly-CSharp.dll</HintPath>
+      <HintPath>X:\SteamLibrary\steamapps\common\Lethal Company\BepInEx\plugins\Brokemono-LethalArmor\MMHOOK_Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
