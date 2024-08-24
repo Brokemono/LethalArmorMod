@@ -10,9 +10,14 @@ namespace LethalArmor.Patches
 
         private static void PlayerControllerB_Reset(PlayerControllerB __instance)
         {
-            if (__instance.isPlayerDead)
+            if (__instance.AllowPlayerDeath())
             {
                 ArmorBase.mls.LogInfo("Player died?");
+                ArmorBase.hasVest = false;
+            }
+			else
+			{
+                ArmorBase.mls.LogInfo("Not dead yet!");
             }
         }
     }

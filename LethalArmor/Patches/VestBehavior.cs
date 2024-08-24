@@ -1,6 +1,8 @@
 ﻿using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
+using LethalLib.Modules;
+using Unity.Netcode;
 
 namespace LethalArmor.Patches
 {
@@ -13,7 +15,7 @@ namespace LethalArmor.Patches
             if (buttonDown && !ArmorBase.hasVest)
             {
                 base.DestroyObjectInHand(playerHeldBy);
-                base.DiscardItem();
+                gameObject.GetComponent<NetworkObject>().Despawn();
                 ArmorBase.hasVest = true;
                 ArmorBase.hits = 6;
                 ArmorBase.mls.LogInfo("Equipped Armor");
